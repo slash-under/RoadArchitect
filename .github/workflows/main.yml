@@ -1,0 +1,23 @@
+- name: create-unitypackage
+  jobs:
+    list:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - run: |
+          find Assets/RoadArchitect/ -name * > metaList
+          mkdir a
+
+      - uses: pCYSl5EDgo/create-unitypackage@v1.1.1
+        with:
+          # Output unitypackage file path
+          package-path: 'a/output.unitypackage'
+          # Relative file paths from project-folder. Multi-line string value. Each line should ends with .meta.
+          include-files: metaList
+          # Unity project folder. Default => ./
+          project-folder: # optional
+
+      - uses: actions/upload-artifact@master
+        with:
+          path: a
+          name: package
